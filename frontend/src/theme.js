@@ -22,8 +22,8 @@ export const toISODate = (date) => {
   return `${y}-${m}-${d}`;
 };
 
-const DAY_LABELS = ["Min", "Sen", "Sel", "Rab", "Kam", "Jum", "Sab"];
-const MONTH_LABELS = [
+export const DAY_LABELS = ["Min", "Sen", "Sel", "Rab", "Kam", "Jum", "Sab"];
+export const MONTH_LABELS = [
   "Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agu", "Sep", "Okt", "Nov", "Des",
 ];
 

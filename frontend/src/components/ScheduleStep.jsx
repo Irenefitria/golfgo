@@ -2,9 +2,10 @@ import React, { useEffect, useMemo, useState } from "react";
 import { Calendar, Users, Plus, Minus, ChevronRight } from "lucide-react";
 import { C, rupiah, nextDates, isWeekendISO } from "../theme";
 import { Button, LoadingBlock, ErrorBlock } from "./Common";
+import DatePicker from "./DatePicker";
 import { api } from "../api";
 
-const DATES = nextDates(6);
+const DATES = nextDates(5);
 
 export function computePlayerRate(course, iso, categoryId, membershipId, categories, memberships) {
   const cat = categories.find((c) => c.id === categoryId) || categories[0];
@@ -51,22 +52,25 @@ export default function ScheduleStep({ course, date, setDate, slot, setSlot, pla
         Pilih tanggal & jam tee time
       </h2>
 
-      <div className="flex gap-2 mb-6 overflow-x-auto pb-1">
-        {DATES.map((d) => (
-          <button
-            key={d.iso}
-            onClick={() => setDate(d.iso)}
-            className="px-4 py-2 rounded-full text-sm whitespace-nowrap"
-            style={{
-              backgroundColor: date === d.iso ? C.fairway700 : "#fff",
-              color: date === d.iso ? C.ivory : C.ink,
-              border: `1px solid ${date === d.iso ? C.fairway700 : C.line}`,
-            }}
-          >
-            <Calendar size={13} className="inline mr-1.5 -mt-0.5" />
-            {d.display}
-          </button>
-        ))}
+      <div className="flex gap-2 mb-6 items-start">
+        <div className="flex gap-2 overflow-x-auto pb-1 flex-1 min-w-0">
+          {DATES.map((d) => (
+            <button
+              key={d.iso}
+              onClick={() => setDate(d.iso)}
+              className="px-4 py-2 rounded-full text-sm whitespace-nowrap flex-shrink-0"
+              style={{
+                backgroundColor: date === d.iso ? C.fairway700 : "#fff",
+                color: date === d.iso ? C.ivory : C.ink,
+                border: `1px solid ${date === d.iso ? C.fairway700 : C.line}`,
+              }}
+            >
+              <Calendar size={13} className="inline mr-1.5 -mt-0.5" />
+              {d.display}
+            </button>
+          ))}
+        </div>
+        <DatePicker value={date} onChange={setDate} quickDates={DATES.map((d) => d.iso)} />
       </div>
 
       <div className="grid grid-cols-4 gap-3 mb-6">
