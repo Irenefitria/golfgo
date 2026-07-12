@@ -111,6 +111,26 @@ CREATE INDEX idx_bookings_course_date ON bookings(course_id, booking_date);
 CREATE INDEX idx_bookings_code ON bookings(booking_code);
 CREATE INDEX idx_booking_players_booking ON booking_players(booking_id);
 
+-- ---------- Admin & Member ----------
+
+CREATE TABLE admins (
+  id            UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  username      VARCHAR(60) UNIQUE NOT NULL,
+  password_hash VARCHAR(200) NOT NULL,
+  created_at    TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+
+CREATE TABLE members (
+  id             UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  name           VARCHAR(120) NOT NULL,
+  email          VARCHAR(150),
+  phone          VARCHAR(30),
+  membership_id  VARCHAR(20) REFERENCES membership_types(id),
+  joined_at      DATE NOT NULL DEFAULT CURRENT_DATE,
+  active         BOOLEAN NOT NULL DEFAULT true,
+  created_at     TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+
 -- =========================================================
 -- Seed data (sesuai mock data di prototype)
 -- =========================================================
