@@ -10,8 +10,6 @@ services:
     volumes:
       - golfgo_pgdata:/var/lib/postgresql/data
       - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
-    ports:
-      - "5432:5432"
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-golfgo}"]
       interval: 5s
@@ -32,8 +30,6 @@ services:
     depends_on:
       db:
         condition: service_healthy
-    ports:
-      - "4000:4000"
 
   frontend:
     build: ./frontend
