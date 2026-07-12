@@ -21,6 +21,7 @@ export const api = {
   getCaddies: () => request(`/caddies`),
   getCaddyAvailability: (date, slot) => request(`/caddies/availability?date=${date}&slot=${slot}`),
   getMenu: () => request(`/menu`),
+  lookupMember: (code) => request(`/members/lookup/${encodeURIComponent(code)}`),
   createBooking: (payload) => request(`/bookings`, { method: "POST", body: JSON.stringify(payload) }),
   getBooking: (code) => request(`/bookings/${code}`),
   cancelBooking: (code) => request(`/bookings/${code}/cancel`, { method: "POST" }),

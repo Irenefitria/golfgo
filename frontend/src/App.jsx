@@ -19,8 +19,8 @@ const tomorrow = () => {
 };
 
 const defaultPlayers = () => [
-  { id: "p1", name: "", caddyId: null, categoryId: "pria", membershipId: "umum" },
-  { id: "p2", name: "", caddyId: null, categoryId: "pria", membershipId: "umum" },
+  { id: "p1", name: "", memberCode: "", caddyId: null, categoryId: "pria", membershipId: "umum" },
+  { id: "p2", name: "", memberCode: "", caddyId: null, categoryId: "pria", membershipId: "umum" },
 ];
 
 export default function App() {
@@ -101,6 +101,7 @@ export default function App() {
         slot,
         players: playersList.map((p) => ({
           name: p.name,
+          memberCode: p.memberCode || null,
           categoryId: p.categoryId,
           membershipId: p.membershipId,
           caddyId: p.caddyId,

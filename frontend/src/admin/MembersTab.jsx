@@ -141,7 +141,7 @@ export default function MembersTab() {
           <table className="w-full text-sm">
             <thead>
               <tr style={{ backgroundColor: C.sand }}>
-                {["Nama", "Email", "Telepon", "Membership", "Bergabung", "Aksi"].map((h) => (
+                {["ID Member", "Nama", "Email", "Telepon", "Membership", "Bergabung", "Aksi"].map((h) => (
                   <th key={h} className="text-left px-4 py-3 font-semibold whitespace-nowrap" style={{ color: C.fairway900 }}>
                     {h}
                   </th>
@@ -151,6 +151,7 @@ export default function MembersTab() {
             <tbody>
               {members.map((m) => (
                 <tr key={m.id} style={{ borderTop: `1px solid ${C.line}` }}>
+                  <td className="px-4 py-3 font-mono whitespace-nowrap" style={{ color: C.fairway700 }}>{m.member_code}</td>
                   <td className="px-4 py-3">{m.name}</td>
                   <td className="px-4 py-3">{m.email || "-"}</td>
                   <td className="px-4 py-3">{m.phone || "-"}</td>
@@ -169,7 +170,7 @@ export default function MembersTab() {
               ))}
               {!members.length && (
                 <tr>
-                  <td colSpan={6} className="px-4 py-10 text-center" style={{ color: C.inkSoft }}>
+                  <td colSpan={7} className="px-4 py-10 text-center" style={{ color: C.inkSoft }}>
                     Belum ada member
                   </td>
                 </tr>

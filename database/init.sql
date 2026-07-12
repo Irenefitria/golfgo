@@ -88,7 +88,8 @@ CREATE TABLE booking_players (
   category_id    VARCHAR(20) REFERENCES player_categories(id),
   membership_id  VARCHAR(20) REFERENCES membership_types(id),
   caddy_id       VARCHAR(20) REFERENCES caddies(id),
-  player_rate    BIGINT NOT NULL DEFAULT 0
+  player_rate    BIGINT NOT NULL DEFAULT 0,
+  member_code    VARCHAR(20)
 );
 
 CREATE TABLE booking_food_items (
@@ -122,6 +123,7 @@ CREATE TABLE admins (
 
 CREATE TABLE members (
   id             UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  member_code    VARCHAR(20) UNIQUE NOT NULL,
   name           VARCHAR(120) NOT NULL,
   email          VARCHAR(150),
   phone          VARCHAR(30),

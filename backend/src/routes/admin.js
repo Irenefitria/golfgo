@@ -1,6 +1,7 @@
 const express = require("express");
 const { pool } = require("../db");
 const { requireAdmin } = require("../middleware/auth");
+const { generateMemberCode } = require("../utils/pricing");
 
 const router = express.Router();
 router.use(requireAdmin);
@@ -110,11 +111,21 @@ router.post("/members", async (req, res) => {
     const { name, email, phone, membershipId } = req.body;
     if (!name || !name.trim()) return res.status(400).json({ error: "Nama wajib diisi" });
 
-    const { rows } = await pool.query(
-      `INSERT INTO members (name, email, phone, membership_id) VALUES ($1,$2,$3,$4) RETURNING *`,
-      [name.trim(), email || null, phone || null, membershipId || null]
-    );
-    res.status(201).json(rows[0]);
+    let inserted;
+    for (let attempt = 0; attempt < 5; attempt++) {
+      try {
+        const { rows } = await pool.query(
+          `INSERT INTO members (name, email, phone, membership_id, member_code) VALUES ($1,$2,$3,$4,$5) RETURNING *`,
+          [name.trim(), email || null, phone || null, membershipId || null, generateMemberCode()]
+        );
+        inserted = rows[0];
+        break;
+      } catch (err) {
+        if (err.code === "23505" && attempt < 4) continue; // member_code bentrok, coba lagi
+        throw err;
+      }
+    }
+    res.status(201).json(inserted);
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Gagal menambahkan member" });

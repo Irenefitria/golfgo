@@ -3,6 +3,7 @@ import { Calendar, Users, Plus, Minus, ChevronRight } from "lucide-react";
 import { C, rupiah, nextDates, isWeekendISO } from "../theme";
 import { Button, LoadingBlock, ErrorBlock } from "./Common";
 import DatePicker from "./DatePicker";
+import PlayerIdentityField from "./PlayerIdentityField";
 import { api } from "../api";
 
 const DATES = nextDates(5);
@@ -35,7 +36,9 @@ export default function ScheduleStep({ course, date, setDate, slot, setSlot, pla
 
   const addPlayer = () =>
     setPlayersList((list) =>
-      list.length >= 4 ? list : [...list, { id: `p${list.length + 1}-${Date.now()}`, name: "", caddyId: null, categoryId: "pria", membershipId: "umum" }]
+      list.length >= 4
+        ? list
+        : [...list, { id: `p${list.length + 1}-${Date.now()}`, name: "", memberCode: "", caddyId: null, categoryId: "pria", membershipId: "umum" }]
     );
   const removePlayer = () => setPlayersList((list) => (list.length <= 1 ? list : list.slice(0, -1)));
   const updatePlayer = (idx, patch) => setPlayersList((list) => list.map((p, i) => (i === idx ? { ...p, ...patch } : p)));
@@ -143,12 +146,11 @@ export default function ScheduleStep({ course, date, setDate, slot, setSlot, pla
                 >
                   {idx + 1}
                 </div>
-                <input
-                  value={p.name}
-                  onChange={(e) => updatePlayer(idx, { name: e.target.value })}
+                <PlayerIdentityField
+                  player={p}
+                  isMember={p.membershipId !== "umum"}
+                  onChange={(patch) => updatePlayer(idx, patch)}
                   placeholder={`Nama pemain ${idx + 1}`}
-                  className="flex-1 text-sm rounded-lg px-3 py-2.5 outline-none"
-                  style={{ border: `1px solid ${C.line}`, backgroundColor: "#fff" }}
                 />
               </div>
               <div className="grid grid-cols-2 gap-2 pl-10">
@@ -164,7 +166,7 @@ export default function ScheduleStep({ course, date, setDate, slot, setSlot, pla
                 </select>
                 <select
                   value={p.membershipId}
-                  onChange={(e) => updatePlayer(idx, { membershipId: e.target.value })}
+                  onChange={(e) => updatePlayer(idx, { membershipId: e.target.value, name: "", memberCode: "" })}
                   className="text-xs rounded-lg px-3 py-2 outline-none"
                   style={{ border: `1px solid ${C.line}`, backgroundColor: "#fff", color: C.ink }}
                 >

@@ -59,13 +59,33 @@ router.post("/", async (req, res) => {
       if (takenCaddies.length) throw { status: 409, message: "Salah satu caddy sudah dipesan untuk jadwal ini" };
     }
 
+    // resolve ID member ke nama & tipe membership resmi dari database
+    // (server yang jadi sumber kebenaran, bukan input klien, supaya diskon member
+    // tidak bisa diklaim tanpa ID yang valid)
+    const memberByCode = {};
+    for (const p of players) {
+      const code = (p.memberCode || "").trim();
+      if (!code || memberByCode[code.toUpperCase()]) continue;
+      const { rows: memberRows } = await client.query(
+        "SELECT * FROM members WHERE upper(member_code) = upper($1) AND active = true",
+        [code]
+      );
+      if (!memberRows.length) throw { status: 400, message: `ID Member '${code}' tidak ditemukan` };
+      memberByCode[code.toUpperCase()] = memberRows[0];
+    }
+
     let slotTotal = 0;
     const computedPlayers = players.map((p, idx) => {
+      const code = (p.memberCode || "").trim();
+      const member = code ? memberByCode[code.toUpperCase()] : null;
+      const resolvedName = member ? member.name : p.name;
+      const resolvedMembershipId = member ? member.membership_id : p.membershipId;
+
       const cat = catMap[p.categoryId] || categories[0];
-      const mem = memMap[p.membershipId] || memberships[0];
+      const mem = memMap[resolvedMembershipId] || memberships[0];
       const rate = computePlayerRate(course, date, cat, mem);
       slotTotal += rate;
-      return { ...p, index: idx, rate, categoryId: cat.id, membershipId: mem.id };
+      return { ...p, index: idx, rate, categoryId: cat.id, membershipId: mem.id, name: resolvedName, memberCode: code || null };
     });
 
     let caddyTotal = 0;
@@ -102,9 +122,9 @@ router.post("/", async (req, res) => {
 
     for (const p of computedPlayers) {
       await client.query(
-        `INSERT INTO booking_players (booking_id, player_index, name, category_id, membership_id, caddy_id, player_rate)
-         VALUES ($1,$2,$3,$4,$5,$6,$7)`,
-        [booking.id, p.index, p.name || null, p.categoryId, p.membershipId, p.caddyId || null, p.rate]
+        `INSERT INTO booking_players (booking_id, player_index, name, category_id, membership_id, caddy_id, player_rate, member_code)
+         VALUES ($1,$2,$3,$4,$5,$6,$7,$8)`,
+        [booking.id, p.index, p.name || null, p.categoryId, p.membershipId, p.caddyId || null, p.rate, p.memberCode]
       );
     }
     for (const f of foodRows) {

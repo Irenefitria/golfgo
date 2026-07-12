@@ -15,6 +15,11 @@ function generateBookingCode() {
   return `GG-${n}`;
 }
 
+function generateMemberCode() {
+  const n = Math.floor(10000 + Math.random() * 89999);
+  return `MBR-${n}`;
+}
+
 // Kebijakan pembatalan/reschedule: >72 jam gratis, 24-72 jam 50%, <24 jam 100%
 function cancellationFeePct(hoursLeft) {
   if (hoursLeft >= 72) return 0;
@@ -32,6 +37,7 @@ module.exports = {
   isWeekendDate,
   computePlayerRate,
   generateBookingCode,
+  generateMemberCode,
   cancellationFeePct,
   hoursUntilTeeTime,
 };

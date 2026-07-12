@@ -11,6 +11,7 @@ const menuRouter = require("./routes/menu");
 const bookingsRouter = require("./routes/bookings");
 const authRouter = require("./routes/auth");
 const adminRouter = require("./routes/admin");
+const membersRouter = require("./routes/members");
 
 if (!process.env.JWT_SECRET) {
   console.error("JWT_SECRET belum diset di environment. Set nilai rahasia di .env sebelum menjalankan backend.");
@@ -37,6 +38,7 @@ app.use("/api/menu", menuRouter);
 app.use("/api/bookings", bookingsRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/admin", adminRouter);
+app.use("/api/members", membersRouter);
 
 app.use((req, res) => res.status(404).json({ error: "Endpoint tidak ditemukan" }));
 
