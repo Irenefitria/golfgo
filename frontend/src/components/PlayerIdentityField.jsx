@@ -16,18 +16,20 @@ export default function PlayerIdentityField({ player, isMember, onChange, placeh
     const code = (player.memberCode || "").trim();
     if (!code) {
       setStatus("idle");
+      onChange({ memberVerified: false, membershipLabel: "" });
       return undefined;
     }
     setStatus("loading");
+    onChange({ memberVerified: false, membershipLabel: "" });
     clearTimeout(debounceRef.current);
     debounceRef.current = setTimeout(async () => {
       try {
         const res = await api.lookupMember(code);
         setStatus("found");
-        onChange({ name: res.name });
+        onChange({ name: res.name, membershipId: res.membershipId, membershipLabel: res.membershipLabel, memberVerified: true });
       } catch (err) {
         setStatus("notfound");
-        onChange({ name: "" });
+        onChange({ name: "", memberVerified: false, membershipLabel: "" });
       }
     }, 450);
     return () => clearTimeout(debounceRef.current);

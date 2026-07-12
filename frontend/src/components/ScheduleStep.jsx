@@ -164,16 +164,33 @@ export default function ScheduleStep({ course, date, setDate, slot, setSlot, pla
                     <option key={cat.id} value={cat.id}>{cat.label}</option>
                   ))}
                 </select>
-                <select
-                  value={p.membershipId}
-                  onChange={(e) => updatePlayer(idx, { membershipId: e.target.value, name: "", memberCode: "" })}
-                  className="text-xs rounded-lg px-3 py-2 outline-none"
-                  style={{ border: `1px solid ${C.line}`, backgroundColor: "#fff", color: C.ink }}
-                >
-                  {memberships.map((m) => (
-                    <option key={m.id} value={m.id}>{m.label}</option>
-                  ))}
-                </select>
+                {p.membershipId !== "umum" && p.memberVerified ? (
+                  <div
+                    className="flex items-center justify-between text-xs rounded-lg px-3 py-2"
+                    style={{ border: `1px solid ${C.line}`, backgroundColor: C.sand, color: C.fairway900 }}
+                  >
+                    <span className="font-medium">{p.membershipLabel}</span>
+                    <button
+                      type="button"
+                      onClick={() => updatePlayer(idx, { membershipId: "umum", name: "", memberCode: "", membershipLabel: "", memberVerified: false })}
+                      className="underline"
+                      style={{ color: C.inkSoft }}
+                    >
+                      Ubah
+                    </button>
+                  </div>
+                ) : (
+                  <select
+                    value={p.membershipId}
+                    onChange={(e) => updatePlayer(idx, { membershipId: e.target.value, name: "", memberCode: "", membershipLabel: "", memberVerified: false })}
+                    className="text-xs rounded-lg px-3 py-2 outline-none"
+                    style={{ border: `1px solid ${C.line}`, backgroundColor: "#fff", color: C.ink }}
+                  >
+                    {memberships.map((m) => (
+                      <option key={m.id} value={m.id}>{m.label}</option>
+                    ))}
+                  </select>
+                )}
               </div>
               <div className="text-right text-xs font-semibold mt-2 pr-1" style={{ fontFamily: "'IBM Plex Mono', monospace", color: C.flag }}>
                 {rupiah(computePlayerRate(course, date, p.categoryId, p.membershipId, categories, memberships))}
