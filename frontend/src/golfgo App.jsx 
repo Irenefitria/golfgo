@@ -319,270 +319,100 @@ function LoginScreen({ onLogin }) {
   };
 
   return (
-    <div
-      style={{
-        backgroundColor: C.ivory,
-        minHeight: "100%",
-        fontFamily: "'Inter', sans-serif",
-      }}
-      className="flex items-center justify-center px-6 py-12"
-    >
+    <div style={{ backgroundColor: C.ivory, minHeight: "100%", fontFamily: "'Inter', sans-serif" }} className="flex items-center justify-center px-6 py-12">
       <style>{fontImport}</style>
-
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <div
-            className="w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3"
-            style={{ backgroundColor: C.fairway900 }}
-          >
+          <div className="w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3" style={{ backgroundColor: C.fairway900 }}>
             <Flag size={22} color={C.sand} />
           </div>
-
-          <h1
-            style={{
-              fontFamily: "'Fraunces', serif",
-              color: C.fairway900,
-              fontWeight: 600,
-              fontSize: "24px",
-            }}
-          >
-            GolfGo
-          </h1>
-
-          <p className="text-xs mt-1" style={{ color: C.inkSoft }}>
-            Booking tee time, caddy & makanan di berbagai golf course
-          </p>
+          <h1 style={{ fontFamily: "'Fraunces', serif", color: C.fairway900, fontWeight: 600, fontSize: "24px" }}>GolfGo</h1>
+          <p className="text-xs mt-1" style={{ color: C.inkSoft }}>Booking tee time, caddy & makanan di berbagai golf course</p>
         </div>
 
-        <form
-          onSubmit={submit}
-          className="rounded-2xl p-6 space-y-3"
-          style={{
-            backgroundColor: "#fff",
-            border: `1px solid ${C.line}`,
-          }}
-        >
-          <div
-            className="text-sm font-semibold mb-1"
-            style={{ color: C.fairway900 }}
-          >
+        <form onSubmit={submit} className="rounded-2xl p-6 space-y-3" style={{ backgroundColor: "#fff", border: `1px solid ${C.line}` }}>
+          <div className="text-sm font-semibold mb-1" style={{ color: C.fairway900 }}>
             {mode === "login" ? "Masuk ke akun kamu" : "Buat akun baru"}
           </div>
 
           <div>
-            <label
-              className="text-xs mb-1 block"
-              style={{ color: C.inkSoft }}
-            >
-              Nama lengkap
-            </label>
-
-            <div
-  className="flex items-center gap-2 rounded-xl px-3"
-  style={{ border: `1px solid ${C.line}` }}
->
-  <User size={15} color={C.inkSoft} />
-
-  <input
-    id="name"
-    value={name}
-    onChange={(e) => setName(e.target.value)}
-    placeholder="Nama lengkap"
-    className="flex-1 text-sm py-2.5 outline-none bg-transparent"
-  />
-</div>
-</div> 
-
-<div>
-  <label
-    className="text-xs mb-1 block"
-    style={{ color: C.inkSoft }}
-  >
-    No. WhatsApp
-  </label>
-
-            <div
-              className="flex items-center gap-2 rounded-xl px-3"
-              style={{ border: `1px solid ${C.line}` }}
-            >
-              <Phone size={15} color={C.inkSoft} />
-
-              <input
-                id="phone"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-                placeholder="08xx xxxx xxxx"
-                className="flex-1 text-sm py-2.5 outline-none bg-transparent"
-              />
+            <label className="text-xs mb-1 block" style={{ color: C.inkSoft }}>Nama lengkap</label>
+            <div className="flex items-center gap-2 rounded-xl px-3" style={{ border: `1px solid ${C.line}` }}>
+              <User size={15} color={C.inkSoft} />
+              <input value={name} onChange={(e) => setName(e.target.value)} placeholder="Nama pemesan (Pemain 1)"
+                className="flex-1 text-sm py-2.5 outline-none bg-transparent" />
             </div>
-</div>
+          </div>
 
           <div>
-            <label
-              className="text-xs mb-1 block"
-              style={{ color: C.inkSoft }}
-            >
-              Password
-            </label>
+            <label className="text-xs mb-1 block" style={{ color: C.inkSoft }}>No. WhatsApp</label>
+            <div className="flex items-center gap-2 rounded-xl px-3" style={{ border: `1px solid ${C.line}` }}>
+              <Phone size={15} color={C.inkSoft} />
+              <input value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="08xx xxxx xxxx"
+                className="flex-1 text-sm py-2.5 outline-none bg-transparent" />
+            </div>
+          </div>
 
-            <div
-              className="flex items-center gap-2 rounded-xl px-3"
-              style={{ border: `1px solid ${C.line}` }}
-            >
+          <div>
+            <label className="text-xs mb-1 block" style={{ color: C.inkSoft }}>Password</label>
+            <div className="flex items-center gap-2 rounded-xl px-3" style={{ border: `1px solid ${C.line}` }}>
               <Lock size={15} color={C.inkSoft} />
-
-              <input
-                id="password"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••"
-                className="flex-1 text-sm py-2.5 outline-none bg-transparent"
-              />
+              <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="••••••••"
+                className="flex-1 text-sm py-2.5 outline-none bg-transparent" />
             </div>
           </div>
 
           {error && (
-            <div
-              className="text-xs rounded-lg px-3 py-2"
-              style={{
-                backgroundColor: "#FBEAE0",
-                color: C.flagDark,
-              }}
-            >
-              {error}
-            </div>
+            <div className="text-xs rounded-lg px-3 py-2" style={{ backgroundColor: "#FBEAE0", color: C.flagDark }}>{error}</div>
           )}
 
-          <button
-            id="loginButton"
-            type="submit"
-            className="w-full py-3 rounded-full text-sm font-semibold"
-            style={{
-              backgroundColor: C.flag,
-              color: C.ivory,
-            }}
-          >
+          <Button className="w-full mt-2" onClick={submit}>
             {mode === "login" ? "Masuk" : "Daftar & mulai booking"}
-          </button>
+          </Button>
 
-          <button
-            type="button"
-            onClick={() =>
-              setMode(mode === "login" ? "daftar" : "login")
-            }
-            className="w-full text-center text-xs pt-1"
-            style={{ color: C.fairway700 }}
-          >
-            {mode === "login"
-              ? "Belum punya akun? Daftar di sini"
-              : "Sudah punya akun? Masuk"}
+          <button type="button" onClick={() => setMode(mode === "login" ? "daftar" : "login")} className="w-full text-center text-xs pt-1" style={{ color: C.fairway700 }}>
+            {mode === "login" ? "Belum punya akun? Daftar di sini" : "Sudah punya akun? Masuk"}
           </button>
         </form>
 
-        <p
-          className="text-[11px] text-center mt-5"
-          style={{ color: C.inkSoft }}
-        >
-          1 akun bisa dipakai untuk booking sampai 4 pemain sekaligus —
-          pemain lain cukup diisi namanya saat booking, tanpa perlu akun
-          terpisah.
+        <p className="text-[11px] text-center mt-5" style={{ color: C.inkSoft }}>
+          1 akun bisa dipakai untuk booking sampai 4 pemain sekaligus — pemain lain cukup diisi namanya saat booking, tanpa perlu akun terpisah.
         </p>
       </div>
     </div>
   );
 }
+
 // ---------- Course list ----------
 function CourseList({ onSelect }) {
   return (
     <div>
-      <SectionTitle
-        eyebrow="Cari & Pesan"
-        title="Mau main golf di mana hari ini?"
-      />
-
-      <div
-        className="flex items-center gap-3 rounded-full px-5 py-3 mb-8"
-        style={{
-          backgroundColor: "#fff",
-          border: `1px solid ${C.line}`,
-        }}
-      >
+      <SectionTitle eyebrow="Cari & Pesan" title="Mau main golf di mana hari ini?" />
+      <div className="flex items-center gap-3 rounded-full px-5 py-3 mb-8" style={{ backgroundColor: "#fff", border: `1px solid ${C.line}` }}>
         <Search size={18} color={C.inkSoft} />
-
-        <input
-          id="searchCourse"
-          placeholder="Cari nama course atau kota..."
-          className="flex-1 bg-transparent outline-none text-sm"
-          style={{ color: C.ink }}
-        />
+        <input placeholder="Cari nama course atau kota..." className="flex-1 bg-transparent outline-none text-sm" style={{ color: C.ink }} />
       </div>
-
       <div className="grid sm:grid-cols-2 gap-5">
         {COURSES.map((c) => (
-          <button
-            id={`course-${c.id}`}
-            key={c.id}
-            onClick={() => onSelect(c)}
-            className="text-left rounded-2xl overflow-hidden group transition-transform hover:-translate-y-0.5"
-            style={{
-              backgroundColor: "#fff",
-              border: `1px solid ${C.line}`,
-            }}
-          >
-            <div
-              className="h-32 relative flex items-end p-4"
-              style={{
-                background: `linear-gradient(135deg, ${c.tone}, ${C.fairway900})`,
-              }}
-            >
+          <button key={c.id} onClick={() => onSelect(c)} className="text-left rounded-2xl overflow-hidden group transition-transform hover:-translate-y-0.5" style={{ backgroundColor: "#fff", border: `1px solid ${C.line}` }}>
+            <div className="h-32 relative flex items-end p-4" style={{ background: `linear-gradient(135deg, ${c.tone}, ${C.fairway900})` }}>
               <Flag size={22} color={C.ivory} style={{ opacity: 0.85 }} />
             </div>
-
             <div className="p-5">
-              <h3
-                style={{
-                  fontFamily: "'Fraunces', serif",
-                  fontSize: "19px",
-                  fontWeight: 600,
-                  color: C.fairway900,
-                }}
-              >
-                {c.name}
-              </h3>
-
-              <div
-                className="flex items-center gap-1 text-xs mt-1"
-                style={{ color: C.inkSoft }}
-              >
+              <h3 style={{ fontFamily: "'Fraunces', serif", fontSize: "19px", fontWeight: 600, color: C.fairway900 }}>{c.name}</h3>
+              <div className="flex items-center gap-1 text-xs mt-1" style={{ color: C.inkSoft }}>
                 <MapPin size={13} /> {c.loc}
               </div>
-
               <div className="flex items-center justify-between mt-4">
                 <div className="flex items-center gap-1 text-sm">
                   <Star size={14} fill={C.flag} color={C.flag} />
                   <span style={{ fontWeight: 600 }}>{c.rating}</span>
-                  <span style={{ color: C.inkSoft }}>
-                    ({c.reviews})
-                  </span>
+                  <span style={{ color: C.inkSoft }}>({c.reviews})</span>
                 </div>
-
-                <div
-                  className="text-sm font-semibold"
-                  style={{
-                    fontFamily: "'IBM Plex Mono', monospace",
-                    color: C.flag,
-                  }}
-                >
-                  mulai {rupiah(c.baseRate.weekday)}
-                  <span
-                    className="text-xs"
-                    style={{ color: C.inkSoft }}
-                  >
-                    /hari kerja
-                  </span>
+                <div className="text-sm font-semibold" style={{ fontFamily: "'IBM Plex Mono', monospace", color: C.flag }}>
+                  mulai {rupiah(c.baseRate.weekday)}<span className="text-xs" style={{ color: C.inkSoft }}>/hari kerja</span>
                 </div>
-         <div className="flex gap-2 mb-6 overflow-x-auto pb-1"></div>     </div>
+              </div>
             </div>
           </button>
         ))}
@@ -603,46 +433,22 @@ function ScheduleStep({ course, date, setDate, slot, setSlot, playersList, setPl
   return (
     <div>
       <SectionTitle eyebrow={course.name} title="Pilih tanggal & jam tee time" />
-
-<div className="flex gap-2 mb-6 overflow-x-auto pb-1">
-  {dates.map((d) => (
-    <button
-      id={`date-${d.replace(/[^a-zA-Z0-9]/g, "")}`}
-      key={d}
-      onClick={() => setDate(d)}
-      className="px-4 py-2 rounded-full text-sm whitespace-nowrap"
-      style={{
-        backgroundColor: date === d ? C.fairway700 : "#fff",
-        color: date === d ? C.ivory : C.ink,
-        border: `1px solid ${date === d ? C.fairway700 : C.line}`,
-      }}
-    >
-      <Calendar size={13} className="inline mr-1.5 -mt-0.5" />
-      {d}
-    </button>
-  ))}
-</div>
-
-<div className="grid grid-cols-4 gap-3 mb-6"></div>
-
-<div className="grid grid-cols-4 gap-3 mb-6">
-  {SLOTS.map((t) => (
-    <button
-      id={`slot-${t.replace(":", "")}`}
-      key={t}
-      onClick={() => setSlot(t)}
-      className="py-3 rounded-xl text-sm font-medium"
-      style={{
-        backgroundColor: slot === t ? C.flag : "#fff",
-        color: slot === t ? C.ivory : C.ink,
-        border: `1px solid ${slot === t ? C.flag : C.line}`,
-        fontFamily: "'IBM Plex Mono', monospace",
-      }}
-    >
-      {t}
-    </button>
-  ))}
-</div>
+      <div className="flex gap-2 mb-6 overflow-x-auto pb-1">
+        {dates.map((d) => (
+          <button key={d} onClick={() => setDate(d)} className="px-4 py-2 rounded-full text-sm whitespace-nowrap"
+            style={{ backgroundColor: date === d ? C.fairway700 : "#fff", color: date === d ? C.ivory : C.ink, border: `1px solid ${date === d ? C.fairway700 : C.line}` }}>
+            <Calendar size={13} className="inline mr-1.5 -mt-0.5" />{d}
+          </button>
+        ))}
+      </div>
+      <div className="grid grid-cols-4 gap-3 mb-6">
+        {SLOTS.map((t) => (
+          <button key={t} onClick={() => setSlot(t)} className="py-3 rounded-xl text-sm font-medium"
+            style={{ backgroundColor: slot === t ? C.flag : "#fff", color: slot === t ? C.ivory : C.ink, border: `1px solid ${slot === t ? C.flag : C.line}`, fontFamily: "'IBM Plex Mono', monospace" }}>
+            {t}
+          </button>
+        ))}
+      </div>
 
       {/* Tabel referensi harga per kategori */}
       <div className="rounded-2xl p-5 mb-6" style={{ backgroundColor: C.sand }}>

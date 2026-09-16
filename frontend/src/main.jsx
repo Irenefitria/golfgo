@@ -1,11 +1,39 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App.jsx";
-import AdminApp from "./AdminApp.jsx";
+import {
+  BrowserRouter,
+  Routes,
+  Route
+} from "react-router-dom";
+
 import "./index.css";
 
-const isAdmin = window.location.pathname.startsWith("/admin");
+import App from "./App";
+import AdminApp from "./AdminApp";
+
+import Register from "./pages/Register";
+import Login from "./pages/Login";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>{isAdmin ? <AdminApp /> : <App />}</React.StrictMode>
+
+<React.StrictMode>
+
+<BrowserRouter>
+
+<Routes>
+
+<Route path="/" element={<App />} />
+
+<Route path="/register" element={<Register />} />
+
+<Route path="/login" element={<Login />} />
+
+<Route path="/admin/*" element={<AdminApp />} />
+
+</Routes>
+
+</BrowserRouter>
+
+</React.StrictMode>
+
 );
